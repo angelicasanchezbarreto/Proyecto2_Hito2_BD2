@@ -1,30 +1,47 @@
 import face_recognition
 import pickle
 import cv2
+import re
+import os
+from knnRtree import knnRtree
 
 class Recognition:
-    def __init__(self,image_path):
-        self.load_encodings(image_path)
+    def __init__(self,input_path):
+        self.load_encodings(input_path)
     
-    def load_encodings(self,image_path):
+    def load_encodings(self,input_path):
         # load the known faces and embeddings
         print("[INFO] loading encodings...")
         data = pickle.loads(open("encodings.pickle", "rb").read())
 
-        # load the input image and convert it from BGR to RGB
-        image = cv2.imread(image_path)
-        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        
-        # detect the (x, y)-coordinates of the bounding boxes corresponding
-        # to each face in the input image, then compute the facial embeddings
-        # for each face
-        print("[INFO] recognizing faces...")
-        boxes = face_recognition.face_locations(rgb,model="cnn"])
-        encodings = face_recognition.face_encodings(rgb, boxes)
-        
-        # initialize the list of names for each face detected
-        names = []
+        print("Leyendo imagenes de",input_path)
+        for root, dirnames, filenames in os.walk(input_path):
+            for filename in filenames:
+                if re.search("\.(jpg|jpeg|png|bmp|tiff)$", filename):
+                    image_path = os.path.join(root, filename)
 
+                    # load the input image and convert it from BGR to RGB
+                    image = cv2.imread(image_path)
+                    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    
+                    # detect the (x, y)-coordinates of the bounding boxes corresponding
+                    # to each face in the input image, then compute the facial embeddings
+                    # for each face
+                    print("[INFO] recognizing faces...")
+                    boxes = face_recognition.face_locations(rgb,model="cnn")
+                    encodings = face_recognition.face_encodings(rgb, boxes)
+                    result = knnRtree(encodings,10,data)
+                    for i in result:
+                        print(result)
+                    
+                    # initialize the list of names for each face detected
+                    """ names = []
+                    self.loop_encodings(encodings,names,data)
+                    for name in names:
+                        print(name) """
+
+
+    def loop_encodings(self,encodings,names,data):
         # loop over the facial embeddings
         for encoding in encodings:
             # attempt to match each face in the input image to our known

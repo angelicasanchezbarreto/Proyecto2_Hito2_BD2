@@ -5,6 +5,7 @@ import re
 import os
 import nltk 
 from knnSearch import knnRtree, knnSequential
+from rangeSearch import rangeSearch
 
 class Recognition:
     def __init__(self,input_path):
@@ -33,7 +34,8 @@ class Recognition:
                     encodings = face_recognition.face_encodings(rgb, boxes)
                     #result = knnRtree(encodings,8,data)
                     for encoding in encodings:
-                        result = knnSequential(encoding,8,data)
+                        #result = knnSequential(encoding,8,data)
+                        result = rangeSearch(encoding,0.6,data)
                         self.read_image(result)
                     
                     # initialize the list of names for each face detected
@@ -54,8 +56,7 @@ class Recognition:
                     img = cv2.imread(os.path.join(imgpath,image))
                     print(image)
             
-            
-        
+
     def loop_encodings(self,encodings,names,data):
         # loop over the facial embeddings
         for encoding in encodings:

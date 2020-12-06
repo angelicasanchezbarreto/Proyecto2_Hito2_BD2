@@ -33,15 +33,15 @@ def knnRtree(Query,k,data):
     p.buffering_capacity = 23
     p.dat_extension = 'data'
     p.idx_extension = 'index'
-    idx = index.Index('rtree_index')
+    #idx = index.Index('rtree_index',properties=p)
+    idx = index.Index(properties=p)
+    #idx.interleaved = True
     id = 0
     result = []
     for i in data["encodings"]:
-        lista = list(i)
-        idx.insert(id,tuple(lista))
+        coordinates = tuple(i)
+        idx.insert(id,coordinates)
         id+=1
     for i in Query:
-        query_list = list(i)
-        query_tuple = tuple(query_list)
-        result.append(idx.nearest(coordinates=query_tuple,num_results=k))
+        result.append(idx.nearest(coordinates=i,num_results=k))
     return result

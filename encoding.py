@@ -8,6 +8,7 @@ class Encoding:
     files = []
     knownEncodings = []
     knownNames = []
+    knownPicNames = []
 
     def __init__(self,imgpath):
         self.get_images_in_folders(imgpath)
@@ -46,7 +47,8 @@ class Encoding:
             # loop over the encodings
             for encoding in encodings:
             # add each encoding + name to our set of known names and encodings
-                self.knownEncodings.append(encoding)
+                pic_name = filepath.split(os.path.sep)[-1]
+                self.knownEncodings.append((pic_name,encoding))
                 self.knownNames.append(name)
 
     def write_encodings(self):

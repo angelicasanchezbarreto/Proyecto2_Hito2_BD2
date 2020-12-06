@@ -3,7 +3,8 @@ import pickle
 import cv2
 import re
 import os
-from knnRtree import knnRtree
+import nltk 
+from knnSearch import knnRtree, knnSequential
 
 class Recognition:
     def __init__(self,input_path):
@@ -30,9 +31,10 @@ class Recognition:
                     print("[INFO] recognizing faces...")
                     boxes = face_recognition.face_locations(rgb,model="cnn")
                     encodings = face_recognition.face_encodings(rgb, boxes)
-                    result = knnRtree(encodings,10,data)
-                    for i in result:
-                        print(result)
+                    #result = knnRtree(encodings,8,data)
+                    for encoding in encodings:
+                        result = knnSequential(encoding,8,data)
+                        self.read_image(result)
                     
                     # initialize the list of names for each face detected
                     """ names = []
@@ -40,7 +42,20 @@ class Recognition:
                     for name in names:
                         print(name) """
 
-
+    def read_image(self,result):
+        for i in result:
+            name = i[1].replace('_0',' ')
+            tokens = nltk.word_tokenize(name)
+            name = tokens[0]
+            dirname = os.path.join(os.getcwd(), 'prueba')
+            imgpath = dirname + os.sep + name
+            for image in os.listdir(imgpath):
+                if image == i[1]:
+                    img = cv2.imread(os.path.join(imgpath,image))
+                    print(image)
+            
+            
+        
     def loop_encodings(self,encodings,names,data):
         # loop over the facial embeddings
         for encoding in encodings:

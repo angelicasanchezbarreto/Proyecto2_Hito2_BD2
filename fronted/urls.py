@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from fronted.views import face_recognition
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('face_recognition/', face_recognition)
 ]

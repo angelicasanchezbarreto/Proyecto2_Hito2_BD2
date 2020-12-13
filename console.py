@@ -19,7 +19,7 @@ class Console:
 
 
 #solo se ejecuta una vez
-""" dirname = os.path.join(os.getcwd(), 'prueba6400')
+""" dirname = os.path.join(os.getcwd(), 'images/prueba6400')
 imgpath = dirname + os.sep 
 encode = Encoding(imgpath) """
 

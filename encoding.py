@@ -7,8 +7,6 @@ import face_recognition
 class Encoding:
     files = []
     knownEncodings = []
-    knownNames = []
-    knownPicNames = []
 
     def __init__(self,imgpath):
         self.get_images_in_folders(imgpath)
@@ -34,19 +32,14 @@ class Encoding:
             len(self.files)))
             name = filepath.split(os.path.sep)[-2]
             print(filepath)
-            image = cv2.imread(filepath)
-            rgb = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
-            boxes = face_recognition.face_locations(rgb,model="cnn")
             
-            encodings = face_recognition.face_encodings(rgb,boxes)
-            for encoding in encodings:
-                pic_name = filepath.split(os.path.sep)[-1]
-                self.knownEncodings.append((pic_name,encoding))
-                self.knownNames.append(name)
+            image = face_recognition.load_image_file(filepath)
+            vector = face_recognition.face_encodings(image)[0]
+            pic_name = filepath.split(os.path.sep)[-1]
+            self.knownEncodings.append((pic_name,vector))
 
     def write_encodings(self):
         print("[INFO] serializing encodings...")
-        data = {"encodings": self.knownEncodings, "names": self.knownNames}
         f = open("encodings6400.pickle", "wb")
-        f.write(pickle.dumps(data))
+        f.write(pickle.dumps(self.knownEncodings))
         f.close()

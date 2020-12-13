@@ -11,7 +11,7 @@ from rangeSearch import rangeSearch
 class Recognition:
     def __init__(self,input_path,option):
         print("[INFO] loading encodings...")
-        self.data = pickle.loads(open("encodings3200.pickle", "rb").read())
+        self.data = pickle.loads(open("files/encodings100.pickle", "rb").read())
         self.load_encodings(input_path,option)
     
     def load_encodings(self,input_path,option):
@@ -21,16 +21,22 @@ class Recognition:
                 if re.search("\.(jpg|jpeg|png|bmp|tiff)$", filename):
                     image_path = os.path.join(root, filename)
 
-                    image = cv2.imread(image_path)
-                    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                    
                     print("[INFO] recognizing faces...")
-                    boxes = face_recognition.face_locations(rgb,model="cnn")
-                    encodings = face_recognition.face_encodings(rgb, boxes)
-                    #start_time = time()
-                    for encoding in encodings:
-                        result = self.choose_algorithm(encoding,option)
+                    
+                    image = face_recognition.load_image_file(image_path)
+                    locations = face_recognition.face_locations(image)
+
+                    coordinate = dict()
+                    for i in locations:
+                        top, right, bottom, left = i
+                        coordinate = image[top:bottom,left:right]
+                        vector = face_recognition.face_encodings(coordinate)[0]
+                        result = self.choose_algorithm(vector,option)
+                        #print(result)
                         self.read_image(result)
+                        
+                    #start_time = time()
+                        
                     #end_time = time()
                     #final_time = round(1000*(end_time - start_time),4)
                     #print(final_time)

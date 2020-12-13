@@ -19,12 +19,12 @@ def knnRtree(Query,k,data):
     p.buffering_capacity = 23
     p.dat_extension = 'data'
     p.idx_extension = 'index'
-    idx = index.Index('rtree',properties=p)
+    idx = index.Index(properties=p)
     #idx.interleaved = True
     id = 0
     result = []
     for i in data["encodings"]:
-        coordinates = tuple(i)
+        coordinates = tuple(i[1])
         idx.insert(id,coordinates)
         id+=1
     for i in Query:

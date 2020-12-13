@@ -6,8 +6,16 @@ import re
 
 class Console:
     def __init__(self,input_path):
-        recognition = Recognition(input_path)
-        
+        option = self.options()
+        recognition = Recognition(input_path,option)
+
+    def options(self):
+        print("Which method do you want to use:")
+        print("1. KNN Sequential Search")
+        print("2. KNN Rtree Search")
+        print("3. Range Search")
+        number = input()
+        return number
 
 
 #solo se ejecuta una vez

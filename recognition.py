@@ -22,13 +22,10 @@ class Recognition:
                 if re.search("\.(jpg|jpeg|png|bmp|tiff)$", filename):
                     image_path = os.path.join(root, filename)
 
-                    # load the input image and convert it from BGR to RGB
                     image = cv2.imread(image_path)
                     rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                     
-                    # detect the (x, y)-coordinates of the bounding boxes corresponding
-                    # to each face in the input image, then compute the facial embeddings
-                    # for each face
+
                     print("[INFO] recognizing faces...")
                     boxes = face_recognition.face_locations(rgb,model="cnn")
                     encodings = face_recognition.face_encodings(rgb, boxes)
@@ -38,7 +35,6 @@ class Recognition:
                         result = rangeSearch(encoding,0.6,data)
                         self.read_image(result)
                     
-                    # initialize the list of names for each face detected
                     """ names = []
                     self.loop_encodings(encodings,names,data)
                     for name in names:

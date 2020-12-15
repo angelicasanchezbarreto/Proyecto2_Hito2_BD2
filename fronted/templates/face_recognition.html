@@ -3,6 +3,90 @@
         <title>Face Recognition Engine</title>
     </head>
     <body>
-    <h1>Welcome to the Face Recognition Engine</h1>
+    <div id = "header" class="rounded">
+        <a id="close"></a>
+        Welcome to the Face Recognition Engine    
+    </div>
+        <style>
+            form{
+                width:300px;
+	            padding:16px;
+	            border-radius:10px;
+	            margin:auto;
+                background-color:rgb(58, 125, 163);
+            }
+            p{
+                color: rgb(5, 5, 5);
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            #algoritmo{
+                border-radius: 6px;
+            }
+            #imagen{
+                border-radius: 6px;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                color: black;
+                margin: 0px;
+                width: 190px;
+            }
+            #number{
+                width: 200px;
+                border-radius: 6px;
+            }
+            #boton{
+                width: 100px;
+                border-radius: 6px;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+            #header{
+                padding-top: 15px;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                height:40px;
+                background-color: #5E87B0;
+                margin-bottom:15px;
+                color:rgb(12, 12, 12);
+            }
+            #footer{
+                margin-top: 20px;
+                padding-top: 1px;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                height:40px;
+                background-color: #5E87B0;
+                margin-bottom: auto;
+                color:rgb(12, 12, 12);
+            }
+
+        </style>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" id="imagen" name="image">
+            <p>Subir imagen</p>
+            <select id="algoritmo" name="algorithm"> 
+                <option value="3">Range search</option>
+                <optio value = "2">KNN Rtree search</option>
+                <option value = "1">KNN sequential search</option>
+            </select>
+            <p>Elegir algoritmo a utilizar</p>
+            <input type="number" id="number" name="num">
+            <p>Indicar cantidad de vecinos</p>
+            <center><button type="submit" id="boton">Buscar</button></center>
+        </form>
+        <p>
+            <table>
+                <tr>
+                    Nombres de artistas
+                </tr>
+                {% for key in Artists %}
+                <tr>
+                    <td>{{ key }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </p>
+        <div id="footer">
+            <p>Integrantes: Angélica Sánchez y Alejandro Otero</p>
+        </div>
     </body>
 </html>

@@ -4,11 +4,14 @@ import os
 import re
 
 class Console:
-    def __init__(self,input_path):
-        option = self.options()
-        recognition = Recognition(input_path,option)
+    def base(self,input_path, algorithm, n):
+        option = (algorithm, n)
+        recognition = Recognition()
+        result = recognition.main(input_path, option)
+        return result
 
-    def options(self):
+
+"""   def options(self):
         print("Which method do you want to use:")
         print("1. KNN Sequential Search")
         print("2. KNN Rtree Search")
@@ -16,7 +19,7 @@ class Console:
         number = input()
         print("How many images do you want:")
         size = input()
-        return number,size
+        return number,size"""
 
 
 #solo se ejecuta una vez
@@ -24,6 +27,6 @@ class Console:
 imgpath = dirname + os.sep 
 encode = Encoding(imgpath) """
 
-dirname2 = os.path.join(os.getcwd(), 'pruebaInputs')
-imgpath2 = dirname2 + os.sep 
-console = Console(imgpath2)
+#dirname2 = os.path.join(os.getcwd(), 'pruebaInputs')
+#imgpath2 = dirname2 + os.sep 
+#console = Console(imgpath2)

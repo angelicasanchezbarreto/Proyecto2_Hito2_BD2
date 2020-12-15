@@ -11,6 +11,7 @@ from rangeSearch import rangeSearch
 
 class Recognition:
     def __init__(self,option):
+        self.size = option
         if option == '100':
             self.data = json.loads(open("files/encodings100.json", "r").read())
         elif option == '200':
@@ -48,7 +49,7 @@ class Recognition:
                         coordinate = image[top:bottom,left:right]
                         vector = face_recognition.face_encodings(coordinate)[0]
                         result = self.choose_algorithm(vector,option)
-                        self.read_image(result,option)
+                        self.read_image(result)
                         
                     #start_time = time()
                         
@@ -57,16 +58,16 @@ class Recognition:
                     #print(final_time)
         return self.image_paths
 
-    def read_image(self,result,option):
+    def read_image(self,result):
         images = []
         key_name = result[0][1].replace('_0',' ')
         key_tokens = nltk.word_tokenize(key_name)
         key_name = key_tokens[0]
         
-        path = self.choose_path(option)
+        path = self.choose_path()
         for i in result:
             dirname = os.path.join(os.getcwd(), path)
-            imgpath = dirname + os.sep + i[1]
+            imgpath = dirname + os.sep + key_name + os.sep + i[1]
             images.append(imgpath)
             # for image in os.listdir(imgpath):
             #     img_in_result = i[1]
@@ -86,22 +87,22 @@ class Recognition:
             result = rangeSearch(encoding,0.6,self.data)
         return result
 
-    def choose_path(self,option):
+    def choose_path(self):
         path = str()
-        if option == '100':
+        if self.size == '100':
             path = 'images/prueba100'
-        elif option == '200':
+        elif self.size == '200':
             path = 'images/prueba200'
-        elif option == '400':
+        elif self.size == '400':
             path = 'images/prueba400'
-        elif option == '800':
+        elif self.size == '800':
             path = 'images/prueba800'
-        elif option == '1600':
+        elif self.size == '1600':
             path = 'images/prueba1600'
-        elif option == '3200':
+        elif self.size == '3200':
             path = 'images/prueba3200'
-        elif option == '6400':
+        elif self.size == '6400':
             path = 'images/prueba6400'
-        elif option == '12800':
+        elif self.size == '12800':
             path = 'images/prueba12800'
         return path

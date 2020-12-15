@@ -47,7 +47,7 @@
                 height:40px;
                 background-color: #6c91b6;
                 margin-bottom:15px;
-                color:rgb(206, 198, 198);
+                color:rgb(204, 198, 198);
             }
             #footer{
                 margin-top: 20px;
@@ -56,7 +56,10 @@
                 height:40px;
                 background-color: #6c91b6;
                 margin-bottom: auto;
-                color:rgb(206, 198, 198);
+                color:rgb(204, 198, 198);
+            }
+            #titulo{
+                color: rgb(41, 41, 40);
             }
 
         </style>
@@ -88,12 +91,15 @@
         </form>
         <p>
             <table>
-                <tr>
-                    Nombres de artistas
+                <tr id="titulo">
+                    <p style="color: black;">Artistas: </p>
                 </tr>
-                {% for key in Artists %}
+                {% for key,value in images.items %}
                 <tr>
                     <td>{{ key }}</td>
+                    {% for val in value %}
+                    <td><img src="val"/> </td>
+                    {% endfor %}
                 </tr>
                 {% endfor %}
                 <tr>
@@ -102,7 +108,7 @@
             </table>
         </p>
         <div id="footer">
-            <p>Integrantes: Angélica Sánchez y Alejandro Otero</p>
+            Integrantes: Angélica Sánchez y Alejandro Otero
         </div>
     </body>
 </html>

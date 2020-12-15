@@ -26,9 +26,9 @@ class Console:
 imgpath = dirname + os.sep 
 encode = Encoding(imgpath) """
 
-dirname2 = os.path.join(os.getcwd(), 'pruebaInputs')
-imgpath2 = dirname2 + os.sep 
+#dirname2 = os.path.join(os.getcwd(), 'pruebaInputs')
+#imgpath2 = dirname2 + os.sep 
 #console = Console(imgpath2)
 
-console = Console()
-print(console.base(imgpath2,'1','100'))
+#console = Console()
+#print(console.base(imgpath2,'1','100'))

@@ -56,7 +56,7 @@ ROOT_URLCONF = 'fronted.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Users/alejandrotero/Documents/UTEC/Ciclo 6/BD2/Proyecto2_Hito2_BD2/fronted/templates'],
+        'DIRS': ['/Users/alejandrotero/Documents/UTEC/Ciclo6/BD2/Proyecto2_Hito2_BD2/fronted/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,7 +122,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/static')
+    os.path.join(BASE_DIR, 'frontend/static'),
+    '/images/',
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pruebaInputs')

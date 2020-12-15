@@ -9,7 +9,7 @@ import os
 def face_recognition(request):
     dirname2 = os.path.join(os.getcwd(), 'pruebaInputs')
     imgpath2 = dirname2 + os.sep 
-    images = []
+    img = {}
     if request.method == 'POST':
         Image = request.FILES["image"]
         fs = FileSystemStorage()
@@ -17,6 +17,5 @@ def face_recognition(request):
         Algorithm = request.POST["algorithm"]
         amount = request.POST["num"]
         console = Console()
-        images = console.base(imgpath2, Algorithm, amount)
-
-    return render(request, 'face_recognition.html', {"Artists": images})
+        img = console.base(imgpath2, Algorithm, amount)
+    return render(request, 'face_recognition.html', {"images":img})

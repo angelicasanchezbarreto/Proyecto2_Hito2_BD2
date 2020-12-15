@@ -10,13 +10,15 @@ from knnSearch import knnRtree, knnSequential
 from rangeSearch import rangeSearch
 
 class Recognition:
-    def __init__(self,input_path,option):
-        print("[INFO] loading encodings...")
+    def main(self,input_path,option):
+        #print("[INFO] loading encodings...")
         self.choose_size(option[1])
-        self.load_encodings(input_path,option[0])
+        array = self.load_encodings(input_path,option[0])
+        return array
     
     def load_encodings(self,input_path,option):
         print("Leyendo imagenes de",input_path)
+        images = []
         for root, dirnames, filenames in os.walk(input_path):
             for filename in filenames:
                 if re.search("\.(jpg|jpeg|png|bmp|tiff)$", filename):
@@ -33,26 +35,30 @@ class Recognition:
                         coordinate = image[top:bottom,left:right]
                         vector = face_recognition.face_encodings(coordinate)[0]
                         result = self.choose_algorithm(vector,option)
-                        self.read_image(result)
+                        images.append(self.read_image(result))
                         
                     #start_time = time()
                         
                     #end_time = time()
                     #final_time = round(1000*(end_time - start_time),4)
                     #print(final_time)
+        return images
 
     def read_image(self,result):
+        images = []
         for i in result:
             name = i[1].replace('_0',' ')
             tokens = nltk.word_tokenize(name)
             name = tokens[0]
             dirname = os.path.join(os.getcwd(), 'images/prueba100')
-            imgpath = dirname + os.sep + name
-            for image in os.listdir(imgpath):
-                img_in_result = i[1]
-                if image == img_in_result:
-                    img = cv2.imread(os.path.join(imgpath,image))
-                    print(image)
+            imgpath = dirname + os.sep + name + os.sep + i
+            images.append(imgpath)
+            # for image in os.listdir(imgpath):
+            #     img_in_result = i[1]
+            #     if image == img_in_result:
+            #         img = cv2.imread(os.path.join(imgpath,image))
+            #         print(image)
+        return images
             
     def choose_algorithm(self,encoding,option):
         result = []

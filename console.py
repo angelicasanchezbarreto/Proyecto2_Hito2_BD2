@@ -14,7 +14,9 @@ class Console:
         print("2. KNN Rtree Search")
         print("3. Range Search")
         number = input()
-        return number
+        print("How many images do you want:")
+        size = input()
+        return number,size
 
 
 #solo se ejecuta una vez

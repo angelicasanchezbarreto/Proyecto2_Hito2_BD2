@@ -12,8 +12,8 @@ from rangeSearch import rangeSearch
 class Recognition:
     def __init__(self,input_path,option):
         print("[INFO] loading encodings...")
-        self.data = json.loads(open("files/encodings100.json", "r").read())
-        self.load_encodings(input_path,option)
+        self.choose_size(option[1])
+        self.load_encodings(input_path,option[0])
     
     def load_encodings(self,input_path,option):
         print("Leyendo imagenes de",input_path)
@@ -63,3 +63,21 @@ class Recognition:
         elif option == '3':
             result = rangeSearch(encoding,0.6,self.data)
         return result
+
+    def choose_size(self,option):
+        if option == '100':
+            self.data = json.loads(open("files/encodings100.json", "r").read())
+        elif option == '200':
+            self.data = json.loads(open("files/encodings200.json", "r").read())
+        elif option == '400':
+            self.data = json.loads(open("files/encodings400.json", "r").read())
+        elif option == '800':
+            self.data = json.loads(open("files/encodings800.json", "r").read())
+        elif option == '1600':
+            self.data = json.loads(open("files/encodings1600.json", "r").read())
+        elif option == '3200':
+            self.data = json.loads(open("files/encodings3200.json", "r").read())
+        elif option == '6400':
+            self.data = json.loads(open("files/encodings6400.json", "r").read())
+        if option == '12800':
+            self.data = json.loads(open("files/encodings12800.json", "r").read())

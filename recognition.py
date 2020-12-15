@@ -59,23 +59,17 @@ class Recognition:
         return self.image_paths
 
     def read_image(self,result):
-        images = []
-        key_name = result[0][1].replace('_0',' ')
-        key_tokens = nltk.word_tokenize(key_name)
-        key_name = key_tokens[0]
-        
         path = self.choose_path()
         for i in result:
+            key_name = i[1].replace('_0',' ')
+            key_tokens = nltk.word_tokenize(key_name)
+            key_name = key_tokens[0]
             dirname = os.path.join(os.getcwd(), path)
             imgpath = dirname + os.sep + key_name + os.sep + i[1]
-            images.append(imgpath)
-            # for image in os.listdir(imgpath):
-            #     img_in_result = i[1]
-            #     if image == img_in_result:
-            #         img = cv2.imread(os.path.join(imgpath,image))
-            #         print(image)
-            
-        self.image_paths[key_name] = images
+            if key_name in self.image_paths:
+                self.image_paths[key_name].append(imgpath)
+            else:
+                self.image_paths.setdefault(key_name,[]).append(imgpath)
             
     def choose_algorithm(self,encoding,option):
         result = []

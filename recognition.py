@@ -48,7 +48,7 @@ class Recognition:
                         coordinate = image[top:bottom,left:right]
                         vector = face_recognition.face_encodings(coordinate)[0]
                         result = self.choose_algorithm(vector,option)
-                        self.read_image(result)
+                        self.read_image(result,option)
                         
                     #start_time = time()
                         
@@ -57,14 +57,15 @@ class Recognition:
                     #print(final_time)
         return self.image_paths
 
-    def read_image(self,result):
+    def read_image(self,result,option):
         images = []
         key_name = result[0][1].replace('_0',' ')
         key_tokens = nltk.word_tokenize(key_name)
         key_name = key_tokens[0]
         
+        path = self.choose_path(option)
         for i in result:
-            dirname = os.path.join(os.getcwd(), 'images/prueba100')
+            dirname = os.path.join(os.getcwd(), path)
             imgpath = dirname + os.sep + i[1]
             images.append(imgpath)
             # for image in os.listdir(imgpath):
@@ -84,3 +85,23 @@ class Recognition:
         elif option == '3':
             result = rangeSearch(encoding,0.6,self.data)
         return result
+
+    def choose_path(self,option):
+        path = str()
+        if option == '100':
+            path = 'images/prueba100'
+        elif option == '200':
+            path = 'images/prueba200'
+        elif option == '400':
+            path = 'images/prueba400'
+        elif option == '800':
+            path = 'images/prueba800'
+        elif option == '1600':
+            path = 'images/prueba1600'
+        elif option == '3200':
+            path = 'images/prueba3200'
+        elif option == '6400':
+            path = 'images/prueba6400'
+        elif option == '12800':
+            path = 'images/prueba12800'
+        return path

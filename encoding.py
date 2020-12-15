@@ -3,10 +3,11 @@ import re
 import cv2
 import pickle
 import face_recognition
+import json
 
 class Encoding:
     files = []
-    knownEncodings = []
+    knownEncodings = dict()
 
     def __init__(self,imgpath):
         self.get_images_in_folders(imgpath)
@@ -36,10 +37,10 @@ class Encoding:
             image = face_recognition.load_image_file(filepath)
             vector = face_recognition.face_encodings(image)[0]
             pic_name = filepath.split(os.path.sep)[-1]
-            self.knownEncodings.append((pic_name,vector))
+            self.knownEncodings[pic_name] = list(vector)
 
     def write_encodings(self):
         print("[INFO] serializing encodings...")
-        f = open("encodings6400.pickle", "wb")
-        f.write(pickle.dumps(self.knownEncodings))
+        f = open("files/encodings6400.json", "w")
+        f.write(json.dumps(self.knownEncodings))
         f.close()

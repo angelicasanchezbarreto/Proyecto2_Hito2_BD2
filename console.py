@@ -3,7 +3,6 @@ from recognition import Recognition
 import os
 import re
 
-
 class Console:
     def __init__(self,input_path):
         option = self.options()

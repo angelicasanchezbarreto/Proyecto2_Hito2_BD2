@@ -4,6 +4,7 @@ import cv2
 import re
 import os
 import nltk 
+import json
 from time import time
 from knnSearch import knnRtree, knnSequential
 from rangeSearch import rangeSearch
@@ -11,7 +12,7 @@ from rangeSearch import rangeSearch
 class Recognition:
     def __init__(self,input_path,option):
         print("[INFO] loading encodings...")
-        self.data = pickle.loads(open("files/encodings100.pickle", "rb").read())
+        self.data = json.loads(open("files/encodings100.json", "r").read())
         self.load_encodings(input_path,option)
     
     def load_encodings(self,input_path,option):
@@ -32,7 +33,6 @@ class Recognition:
                         coordinate = image[top:bottom,left:right]
                         vector = face_recognition.face_encodings(coordinate)[0]
                         result = self.choose_algorithm(vector,option)
-                        #print(result)
                         self.read_image(result)
                         
                     #start_time = time()
